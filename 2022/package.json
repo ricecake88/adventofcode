@@ -1,0 +1,23 @@
+{
+  "name": "2022",
+  "version": "1.0.0",
+  "description": "",
+  "main": "js/day1.ts",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "build": "tsc -p . ",
+    "test": "jest"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/preset-typescript": "^7.22.5",
+    "ts-jest": "^29.1.0",
+    "typescript": "^5.1.3"
+  },
+  "dependencies": {
+    "@types/jest": "^29.5.2"
+  }
+}
