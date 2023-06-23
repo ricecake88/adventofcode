@@ -1,13 +1,26 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.sum = exports.elfMostCalories = void 0;
+exports.main = exports.elfMostCalories = exports.transformDataToCalorieList = exports.getTopThreeSum = exports.findElf = void 0;
 /*
  * Day 1 of Advent Code 2022
  * Exercise located:
  * https://adventofcode.com/2022/day/1
  */
 const fs_1 = require("fs");
-function elfMostCalories(data) {
+// -- part two --
+function findElf(calorieAmount, calories) {
+    return calories.indexOf(calorieAmount) + 1;
+}
+exports.findElf = findElf;
+function getTopThreeSum(calories) {
+    let sortedCalories = calories;
+    sortedCalories.sort(function (a, b) { return b - a; });
+    console.log(sortedCalories);
+    return sortedCalories[0] + sortedCalories[1] + sortedCalories[2];
+}
+exports.getTopThreeSum = getTopThreeSum;
+// -- part one
+function transformDataToCalorieList(data) {
     const calories = [];
     let totalCalories = 0;
     for (let i = 0; i < data.length; i++) {
@@ -20,16 +33,18 @@ function elfMostCalories(data) {
         }
     }
     ;
+    return calories;
+}
+exports.transformDataToCalorieList = transformDataToCalorieList;
+function elfMostCalories(calories) {
     return Math.max(...calories);
 }
 exports.elfMostCalories = elfMostCalories;
 function main() {
     const data = (0, fs_1.readFileSync)('./tests/day1/day1-input.txt').toString().replace(/\r\n/g, " ").split('\n');
-    console.log(`Elf #: ${elfMostCalories(data)} carries the most calories`);
+    const calorieList = transformDataToCalorieList(data);
+    console.log(`Calories carried the most: ${calorieList}`);
+    const topThreeSum = getTopThreeSum(calorieList);
+    console.log(`Total calories of top three: ${topThreeSum}`);
 }
-/* test function for jest */
-function sum(a, b) {
-    return a + b;
-}
-exports.sum = sum;
-main();
+exports.main = main;
