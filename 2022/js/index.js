@@ -23,5 +23,5 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const day1 = __importStar(require("./day1"));
-day1.main();
+const day2 = __importStar(require("./day2"));
+day2.main();

@@ -1,3 +1,3 @@
 import * as day1 from './day1';
-
-day1.main();
+import * as day2 from './day2';
+day2.main();

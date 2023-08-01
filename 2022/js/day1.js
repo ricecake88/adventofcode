@@ -15,7 +15,6 @@ exports.findElf = findElf;
 function getTopThreeSum(calories) {
     let sortedCalories = calories;
     sortedCalories.sort(function (a, b) { return b - a; });
-    console.log(sortedCalories);
     return sortedCalories[0] + sortedCalories[1] + sortedCalories[2];
 }
 exports.getTopThreeSum = getTopThreeSum;
