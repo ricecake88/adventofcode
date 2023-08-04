@@ -20,10 +20,10 @@ const oppPlayMap = {
     C: 'scissors'
 }
 
-const myPlayMap = {
-    X: 'rock',
-    Y: 'paper',
-    Z: 'scissors'
+const outcomeMap = {
+    X: 'lose',
+    Y: 'draw',
+    Z: 'win'
 }
 
 enum roundPoints {
@@ -39,8 +39,9 @@ enum roundPoints {
  }
 
 type oppInput = keyof typeof oppPlayMap;
-type myInput = keyof typeof myPlayMap;
+type outcomes = keyof typeof outcomeMap;
 type choices = 'rock' | 'paper' | 'scissors'
+type test = typeof roundPoints
 
 function calculateShapePoints(inputB: choices) {
     return shapePoints[inputB];
@@ -58,23 +59,36 @@ function calculateMyPoints(inputA: choices, inputB: choices) {
     }
 }
 
+function calculateMyHand(inputA: choices, outcome: string) {
+    if (outcome === 'draw') {
+        return inputA;
+    }
+    if (outcome === 'lose') {
+        return winCombos[inputA] as choices
+    }
+    if (outcome === 'win') {
+        const myPlay = Object.entries(winCombos).filter((x) => {
+            if (inputA === x[1]) {
+                return x[0];
+            }
+        }, '')[0][0];
+        return myPlay as choices;
+    }
+
+}
 
 export function main() {
-    //const data = readFileSync('./tests/day2/day2-input.txt').toString().split(" ");
-    
-    let r = rl.createInterface({
-        input: f.createReadStream('./tests/day2/day2-full-input.txt')
-    });
+    const data = f.readFileSync('./tests/day2/day2-full-input.txt');
     let sum = 0;
-    r.on('line', (t) => {
-        const inputs = t.split(" ");
-        //console.log(inputs);
-        let points = calculateMyPoints(oppPlayMap[inputs[0] as oppInput] as choices, myPlayMap[inputs[1] as myInput] as choices);
-        //console.log(points);
-        let shapePoints = calculateShapePoints(myPlayMap[inputs[1] as myInput] as choices);
-        //console.log(shapePoints);
+    const lines = data.toString().split("\n");
+    const test = lines.map(x => {
+        x = x.replace(/[\n\r]/g, '');
+        const inputs = x.split(" ");
+        let hand = calculateMyHand(oppPlayMap[inputs[0] as oppInput] as choices, outcomeMap[inputs[1] as outcomes] as choices)
+        const shapePoints = calculateShapePoints(hand as choices);
+        let points = calculateMyPoints(oppPlayMap[inputs[0] as oppInput] as choices, hand as choices);
         sum += points + shapePoints;
-        console.log(sum);
     });
+    return sum;
 
 }
