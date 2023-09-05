@@ -67,8 +67,10 @@ export function partOne(lines: []) {
 */
 export function partTwo(lines: [], numOfLines: number) {
     let sum = 0;
+    const groupedLines = [];
+
     for (let i = 0; i < lines.length; i++) {
-        const groupedLines = [];
+        groupedLines.length = 0;
 
         // get all the lines to find same item
         for (let j = 0; j < numOfLines; j++) {
@@ -76,10 +78,14 @@ export function partTwo(lines: [], numOfLines: number) {
         }
 
         // compare the lines repeatedly to find the common item
-        let lineNum = 0;
-        let commonItems = groupedLines[lineNum];
-        for (let lineNum = 0; lineNum < numOfLines-1; lineNum++) {
-           commonItems = compareTwoRucksacks(commonItems, groupedLines[lineNum+1]);
+        let commonItems = groupedLines[0];
+        for (let lineNum = 1; lineNum < numOfLines-1; lineNum++) {
+           commonItems = compareTwoRucksacks(commonItems, groupedLines[lineNum]);
+
+           // if nothing is found, break
+           if (commonItems.length === 0) {
+            break;
+           }
         }
 
         // calculate the priority of each commonly found item
